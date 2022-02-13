@@ -1,0 +1,16 @@
+<!-- Importaciones -->
+{%extends 'base.html'%}
+<!--Block Title-->
+{%block title%}
+    {{super()}}
+    welcome to the controler
+{%endblock%}
+<!-- Block body -->
+{%block body%}
+    {{super()}}
+    <div class="container">
+        <h2>¡Hecho!</h2>
+         <p>El estado de las luces ahora es: {{orden}}</p>
+    </div>
+    <a href="{{url_for('main')}}">Regresar al inicio</a>
+{%endblock%}
