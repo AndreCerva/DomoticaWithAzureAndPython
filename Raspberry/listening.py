@@ -1,20 +1,22 @@
 import RPi.GPIO as GPIO#librerias que nos permite trabajar con los pines de la rasp
 import time #Libreria para tiempos de espera
+import os
 from azure.iot.device import IoTHubDeviceClient#Libreria para hacer uso del servicio de Azure IoT Hub
 GPIO.setwarnings(False)#No mostrar advertencias
 #La siguiente connection_string se encuentra en el portal de azure en el registo del device
-CONNECTION_STRING = "Aquí la cadena de conexion" #Aquí pegamos la cadena de conexion tomada desde nuestro portal de azure
+devicestr = os.environ['DEVICESTR']
+CONNECTION_STRING = devicestr #Aquí pegamos la cadena de conexion tomada desde nuestro portal de azure
 pin=16 #Pin positivo al que ira conectado el led verde
 GPIO.setmode(GPIO.BOARD) #Numeraremos los pines del rasp con la numeración board (locación fisica)
 GPIO.setup(pin,GPIO.OUT)#Indicamos que en el pin del led v estará mandando señal
 #Funcion que imprime los mensajes recibidos en la consola
 def message_handler(message): #Recibe el mensaje con todos sus atributos y metodos
-  if message.data.decode() == 'ON': #Si el mensaje que se envia es que se encontro a tommy
+  if message.data.decode() == 'ON': #Si el mensaje que se recibe es un ON
       GPIO.output(pin,GPIO.LOW) #Dar una salida en bajo
       print("Luz encendida")
-  else: #No se ha encontrado a tommy aún
+  else: #No se ha obtenido una entrada
       print("Luz apagada")
-      GPIO.output(pin,GPIO.HIGH) #encender led rojo
+      GPIO.output(pin,GPIO.HIGH) #encender led 
   input('Presiona enter para seguir leyendo mensajes')#Para seguir escuchando presionar enter
   print ("Esperando por un mensaje...")#Estamos esperando algún mensaje
 #Funcion para inicializar el cliente y esperar a recibir el mensaje de la nube al dispositivo
