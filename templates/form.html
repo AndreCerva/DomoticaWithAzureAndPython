@@ -1,5 +1,10 @@
 <!--Importaciones-->
 {%extends 'base.html'%}
+<!--Block Title-->
+{%block title%}
+    {{super()}}
+    welcome to the controler
+{%endblock%}
 <!--Body-->
 {%block body%}
     {{super()}}
@@ -17,5 +22,4 @@
         </div>
     </form>
 </div>
-
 {%endblock%}
